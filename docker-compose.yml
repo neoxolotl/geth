@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  # ethereum node
+  ethereum:
+    container_name: app-ethereum
+    image: ethereum/client-go:stable
+    ports:
+      - "8545:8545" # HTTP
+      - "30303:30303"
+      - "30303:30303/udp"
+    volumes:
+      - ./ethereum-data/.ethereum:/root/.ethereum
+      - ./ethereum-data/keystore:/root/.ethereum/mainnet/keystore:ro
+    restart: always
+    command: --verbosity 4 --http --http.addr "0.0.0.0" --http.corsdomain "*" --ipcdisable --syncmode "light" --cache=512
+
